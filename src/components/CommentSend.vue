@@ -22,6 +22,7 @@ export default {
   methods: {
     sendComment(e){
       this.$emit('sendCommentText', this.$refs.textarea.value);
+      this.$refs.textarea.value="";
     }
   },
   created () {

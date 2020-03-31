@@ -10,6 +10,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+//首先
+
+var commentData = require('../src/assets/json/comment.json')//加载本地数据文件
+var commentList = commentData.commentList//获取对应的本地数据
+
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -42,6 +48,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before(app) {
+      app.get('/api/commentList', (req, res) => {
+        res.json({
+          errno: 0,
+          data: commentList
+        })//接口返回json数据，上面配置的数据seller就赋值给data请求后调用
+      })
     }
   },
   plugins: [

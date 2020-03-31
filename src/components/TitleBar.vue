@@ -3,9 +3,10 @@
     <div class="div-title-bar-content">
       <div class="div-title-bar-left">
         <div>
-          <ul class="ul-title-bar-left">
-            <li class="li-logo point-effect" >
 
+          <ul class="ul-title-bar-left">
+            <li><svg-icon iconClass='BILIBILI_LOGO' className='bilibili-icon ' ></svg-icon></li>
+            <li class="li-logo point-effect" >
               <span>主站</span>
             </li>
             <li class="point-effect" >
@@ -105,9 +106,19 @@ export default {
         display: flex;
       }
     }
-    .li-logo:before{
-      content: "	\E725";
+    .bilibili-icon{
+      /*width: 100px !important;*/
+      font-size: 70px;
+      position: absolute;
+      top: -7px;
+      left: 25px;
+      fill: #45A0D7;
+      cursor: pointer;
     }
+    .li-logo{
+      margin-left: 80px !important;
+    }
+
     .div-title-bar-left{
       width:1200px;
       min-width: 450px;

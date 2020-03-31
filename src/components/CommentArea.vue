@@ -11,7 +11,10 @@
 
     </div>
 
-    <comment-send @sendCommentText="sendCommentText"></comment-send>
+    <comment-send @sendCommentText="sendCommentText" class="comment-send"></comment-send>
+    <comment-list :sendComment="sendCommentList"></comment-list>
+    <pagination-bottom :total="total" :current-page='current' @pagechange="pagechange"></pagination-bottom>
+
 
 
 
@@ -21,20 +24,27 @@
 </template>
 <script>
 import Pagination from '../components/Pagination.vue';
+import PaginationBottom from '../components/PaginationBottom.vue';
 import CommentSend from '../components/CommentSend.vue'
+import CommentItem from '../components/CommentItem.vue'
+import CommentList from '../components/CommentList.vue'
 export default {
 
   name:'common-area',
   components: {
     Pagination,
-    CommentSend
+    CommentSend,
+    CommentItem,
+    CommentList,
+    PaginationBottom
   },
   data () {
     return{
       total: 150,     // 记录总条数
       display: 10,   // 每页显示条数
-      current: 1,   // 当前的页数
+      current: 7,   // 当前的页数
       isSortHot:true,
+      sendCommentList:[]
 
     }
 
@@ -43,6 +53,15 @@ export default {
   methods: {
     sendCommentText(text){
       console.log(text);
+      let comment={
+        userName:"skyj40",
+        like:0,
+        commentText:text,
+        fromDevice:0,
+        sendTime:1585631344,
+        level:4
+      }
+      this.sendCommentList.unshift(comment);
     },
     pagechange:function(currentPage){
       console.log(currentPage);//该参数就是当前点击的页码数
@@ -62,7 +81,7 @@ export default {
   created () {
 
   },
-  porps: {}
+  props: {}
 
 }
 
@@ -71,6 +90,12 @@ export default {
 
 
 
+
+
+
+.comment-send{
+  margin-bottom: 30px;
+}
 
   .common-control-head{
     display: flex;
