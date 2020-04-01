@@ -80,6 +80,9 @@ export default {
     }
   },
   methods: {
+    hello(){
+      console.log("hello");
+    },
     setCurrent: function (idx) {
       if (this.current != idx && idx > 0 && idx < this.page + 1) {
         this.current = idx

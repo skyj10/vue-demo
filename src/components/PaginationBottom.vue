@@ -1,13 +1,13 @@
 <template>
-  <nav class="pagination-bottom">
-    <ul class="pagination">
-      <li  :class="{'disabled': current == 1}" v-if="current!=1"><a class="page-move" href="javascript:;" @click="setCurrent(current - 1)"> 上一页 </a></li>
+  <nav class="pagination-bottom" v-resize="resizePagination">
+    <ul class="pagination"  :class="{'pagination-small':isResize}">
+      <li  :class="{'disabled': current == 1}" class="pre-next-page" v-if="current!=1" @click="setCurrent(current - 1)"><a class="page-move" href="javascript:;" > 上一页 </a></li>
       <!--<li :class="{'disabled': current == 1}"><a href="javascript:;" @click="setCurrent(1)"> 首页 </a></li>-->
-      <li v-for="p in grouplist" :class="{'active': current == p.val}" @click="setCurrent(p.val)"><a href="javascript:;"
+      <li  v-for="p in grouplist" :class="{'active': current == p.val}" @click="setCurrent(p.val)"><a href="javascript:;"
                                                                           > {{ p.text }} </a>
       </li>
       <!--<li :class="{'disabled': current == page}"><a href="javascript:;" @click="setCurrent(page)"> 尾页 </a></li>-->
-      <li :class="{'disabled': current == page}" v-if="current!=page"> <a class="page-move" href="javascript:;" @click="setCurrent(current + 1)"> 下一页</a></li>
+      <li :class="{'disabled': current == page}" class="pre-next-page" v-if="current!=page" @click="setCurrent(current + 1)"> <a class="page-move" href="javascript:;" > 下一页</a></li>
     </ul>
     <div class="total-page-div">共{{page}}页,跳至<input type="text" @keyup.enter="jumpPage($event)">页</div>
 
@@ -20,7 +20,8 @@ export default {
   name: 'pagination-bottom',
   data () {
     return {
-      current: this.currentPage
+      current: this.currentPage,
+      isResize:true,
     }
   },
   props: {
@@ -80,7 +81,42 @@ export default {
       return list
     }
   },
+  directives: {  // 使用局部注册指令的方式
+    resize: { // 指令的名称
+      bind(el, binding) { // el为绑定的元素，binding为绑定给指令的对象
+        let width = '', height = '';
+        function isReize() {
+          const style = document.defaultView.getComputedStyle(el);
+          if (width !== style.width || height !== style.height) {
+            let size={
+              width:width,
+              height:height
+            }
+            binding.value(size);  // 关键
+          }
+          width = style.width;
+          height = style.height;
+        }
+        el.__vueSetInterval__ = setInterval(isReize, 300);
+      },
+      unbind(el) {
+        clearInterval(el.__vueSetInterval__);
+      }
+    }
+  },
   methods: {
+    resizePagination(size){
+      let sizeWidth=parseInt(size.width);
+
+      if(sizeWidth<800){
+        this.isResize=true
+        console.log( sizeWidth<750);
+      }
+      else {
+        this.isResize=false
+      }
+
+    },
     jumpPage(e){
 //      console.log(e.currentTarget.value);
       let pageNum=Number(e.currentTarget.value);
@@ -101,10 +137,16 @@ export default {
   .pagination-bottom{
     display: flex;
     justify-content:space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #99a2aa;
+    align-items: center;
     .total-page-div{
       font-size: 12px;
       line-height: 20px;
-      margin-right: 10px;
+      margin-right: 0px;
+      line-height: 50px;
+
       >input{
         margin: 0 5px;
         padding: 0 10px;
@@ -124,6 +166,13 @@ export default {
       }
     }
 
+    .pagination-small{
+      li{
+        padding: 4px !important;
+      }
+
+    }
+
 
     .pagination {
       overflow: hidden;
@@ -131,6 +180,12 @@ export default {
       /*margin: 0 auto;*/
       /*width: 100%;*/
       /*height: 50px;*/
+
+        >.pre-next-page {
+          padding: 9px 20px;
+        }
+
+
 
       li:hover{
         background: #00a1d6;
@@ -142,6 +197,7 @@ export default {
         }
       }
 
+
       li {
         float: left;
         /*height: 30px;*/
@@ -151,9 +207,10 @@ export default {
         border: 1px solid #ddd;
         margin: 5px 3px;
         font-size: 14px;
-        padding: 11px;
+        padding: 9px;
         cursor: pointer;
-
+        transition: color .3s;
+        transition: background .3s;
         .page-move{
           width: auto;
         }

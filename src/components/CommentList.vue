@@ -1,6 +1,6 @@
 <template>
   <div class="comment-list-content">
-    <comment-item v-for="item in ConcatCommentList" :commentData="item"></comment-item>
+    <comment-item v-for="item in CommentShowList" :commentData="item"></comment-item>
   </div>
 
 
@@ -30,23 +30,11 @@ export default {
   },
   methods: {
 
-    getCommentList(){
-      let _this=this;
-      this.$http.get('/api/commentList')
-        .then(function (response) {
-          console.log(response);
-          _this.getCommonList=response.data.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
   },
   created () {
-    this.getCommentList();
   },
 
-  props: ['sendComment']
+  props: ['sendComment','CommentShowList']
 
 }
 

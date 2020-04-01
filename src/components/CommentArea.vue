@@ -7,14 +7,14 @@
         <li :class="{'common-active':isSortHot}" @click="clickSortHot"  class="point-effect ">按热度排序</li>
         <li :class="{'common-active':!isSortHot}" @click="clickSortTime" class="point-effect">按时间排序</li>
       </ul>
-      <pagination :total="total" :current-page='current' @pagechange="pagechange"></pagination>
+      <pagination ref="pagination" :total="total" :currentPage='current' @pagechange="pagechange"></pagination>
 
     </div>
 
     <comment-send @sendCommentText="sendCommentText" class="comment-send"></comment-send>
-    <comment-list :sendComment="sendCommentList"></comment-list>
-    <pagination-bottom :total="total" :current-page='current' @pagechange="pagechange"></pagination-bottom>
-
+    <comment-list  :CommentShowList="ConcatCommentList"></comment-list>
+    <pagination-bottom ref="paginationBottom" :total="total" :currentPage='current' @pagechange="pagechange"></pagination-bottom>
+    <comment-send  @sendCommentText="sendCommentText" class="comment-send"></comment-send>
 
 
 
@@ -42,15 +42,36 @@ export default {
     return{
       total: 150,     // 记录总条数
       display: 10,   // 每页显示条数
-      current: 7,   // 当前的页数
+      current: 1,   // 当前的页数
       isSortHot:true,
-      sendCommentList:[]
+      sendCommentList:[],
+      getCommonList:[],
+      commentShowList:[]
+
 
     }
 
   },
-  computed: {},
+  computed: {
+    ConcatCommentList:function(){
+      return this.sendCommentList.concat(this.commentShowList);
+    }
+  },
   methods: {
+    getCommentList(){
+      let _this=this;
+      this.$http.get('/api/commentList')
+        .then(function (response) {
+          console.log(response);
+          _this.getCommonList=response.data.data;
+          _this.total=_this.getCommonList.length;
+          let startIndex=(_this.current-1)*_this.display;
+          _this.commentShowList=_this.getCommonList.slice(startIndex,startIndex+_this.display);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     sendCommentText(text){
       console.log(text);
       let comment={
@@ -64,8 +85,15 @@ export default {
       this.sendCommentList.unshift(comment);
     },
     pagechange:function(currentPage){
-      console.log(currentPage);//该参数就是当前点击的页码数
-      // ajax请求, 向后台发送 currentPage, 来获取对应的数据
+
+      this.current=currentPage;
+      this.$refs.pagination.setCurrent(this.current);
+      this.$refs.paginationBottom.setCurrent(this.current);
+      console.log(this.current);//该参数就是当前点击的页码数
+      let startIndex=(currentPage-1)*this.display;
+      this.commentShowList=this.getCommonList.slice(startIndex,startIndex+this.display);
+      console.log(this.commentShowList)
+
 
 
     },
@@ -79,7 +107,7 @@ export default {
 
   },
   created () {
-
+    this.getCommentList();
   },
   props: {}
 

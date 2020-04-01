@@ -19,10 +19,10 @@
         </div>
         <div class="comment-bottom">
           <span v-if="commentData.fromDevice!=0" >{{commentData.fromDevice|formatDevice}}</span>
-          <span>49分钟前</span>
+          <span>{{commentData.sendTime|formatDate}}</span>
           <span class="like"><i></i><span>31</span></span>
           <span class="hate"><i></i></span>
-          <span>回复</span>
+          <span class="comment-back">回复</span>
           <div class="comment-menu" v-click-outside="clickoutside">
             <div class="spot" @click="isShowMenu=true" ></div>
             <div v-if="isShowMenu"  class="comment-menu-list-div"  @mouseleave="isShowMenu=true" >
@@ -54,9 +54,13 @@ export default {
   methods: {
     clickoutside(){
       this.isShowMenu=false;
+      return this.aa.bb(value)
     }
   },
   filters:{
+    formatDate:function (value) {
+//      return this.aa.bb(value)
+    },
     formatDevice:function(value){
       switch(value){
         case 0:return "";
@@ -219,7 +223,7 @@ export default {
     >span{
       margin-right: 10px;
     }
-    >span:last-child{
+    >.comment-back{
       padding: 0 5px;
       border-radius: 4px;
       margin-right: 15px;
@@ -227,7 +231,7 @@ export default {
       cursor: pointer;
       display: inline-block;
     }
-    >span:last-child:hover{
+    >.comment-back:hover{
       color: #00a1d6;
       background: #e5e9ef;
     }

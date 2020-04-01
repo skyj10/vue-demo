@@ -11,12 +11,10 @@
 </template>
 <script>
 export default {
-  name:'video-player',
+  name: 'video-player',
   components: {},
   data () {
-    return{
-
-    }
+    return {}
   },
   computed: {},
   methods: {},
@@ -32,19 +30,19 @@ export default {
 <style type="text/scss" lang="scss">
 
 
-  .player-box-div{
+  .player-box-div {
     margin-top: 15px;
-    width:100%;
+    width: 100%;
     padding-bottom: 55%;
     background: lightcyan;
     position: relative;
 
-  .play-content-div{
-    position: absolute;
-    display: flex;
-    width:100%;
-    height: 100%;
-    background: lightpink;
-  }
+    .play-content-div {
+      position: absolute;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      background: lightpink;
+    }
   }
 </style>
