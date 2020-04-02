@@ -28,16 +28,17 @@
               <span>赛事</span>
             </li>
             <li class="point-effect" >
-              <span>下载APP</span>
+              <svg-icon iconClass='phone' className='phone-icon ' ></svg-icon>
+              <span style="    margin-left: 20px;">下载APP</span>
             </li>
           </ul>
         </div>
 
       </div>
-      <div class="div-title-bar-middle">
+      <div class="div-title-bar-middle" v-resize="resizeSearch">
         <div class="search-box">
-          <input type="text" class="search-input">
-          <div class="search-button-div">
+          <input type="text" class="search-input" v-if="isShowSearchInput">
+          <div class="search-button-div" :class="{'search-button-div-hide':!isShowSearchInput}">
             <svg-icon iconClass='search' className='search-icon '></svg-icon>
           </div>
         </div>
@@ -45,7 +46,7 @@
       <div class="title-bar-right-div">
         <div>
           <div class="header-div"><img class="header-img" src="../assets/img/header.png"/></div>
-          <div><span>大会员</span></div>
+          <div><span >大会员</span></div>
           <div>
             <div class="num-div"><span>18</span></div>
             <span>消息</span>
@@ -70,12 +71,26 @@ export default {
   components: {},
   data() {
     return{
+      isShowSearchInput:true
 
     }
 
   },
   computed: {},
-  methods: {},
+  methods: {
+    resizeSearch(size){
+      let sizeWidth=parseInt(size.width);
+
+      if (sizeWidth<150){
+        this.isShowSearchInput=false;
+        console.log(sizeWidth);
+      }
+      else {
+        this.isShowSearchInput=true;
+      }
+
+    }
+  },
   created() {
 
   },
@@ -106,6 +121,12 @@ export default {
         display: flex;
       }
     }
+    .phone-icon{
+      font-size: 23px;
+      position: absolute;
+      top: 16px;
+      fill: #45A0D7;
+    }
     .bilibili-icon{
       /*width: 100px !important;*/
       font-size: 70px;
@@ -120,8 +141,8 @@ export default {
     }
 
     .div-title-bar-left{
-      width:1200px;
-      min-width: 450px;
+      width: auto;
+      margin-right: 10px;
     }
     .ul-title-bar-left{
       display: flex;
@@ -186,30 +207,31 @@ export default {
 
     }
     .search-box{
-      margin: 0 50px;
+      /*margin: 0 50px;*/
       width: 100%;
-      max-width: 450px;
-      background: #F4F4F4;
-      border: 1px solid #E7E7E7;
-      padding: 0px 10px;
+      max-width: 500px;
+
+
+
       position: relative;
       display: flex;
+      min-width: 30px;
+      justify-content: center;
       .search-button-div{
-        position: absolute;
-        top: 0px;
-        right: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         border-radius: 2px;
         background: #E7E7E7;
         line-height: 26px;
         width: 48px;
         height: 100%;
         .search-icon{
-          position: absolute;
-          top: 8px;
-          left: 15px;
           fill: #515151;
           font-size: 19px;
           line-height: 36px;
+          padding: 0 15px;
           cursor: pointer;
           transition: fill .3s;
           transition-property: fill;
@@ -222,10 +244,19 @@ export default {
           fill:#1890ff;
         }
       }
+      .search-button-div-hide{
+        background: none;
+        .search-icon{
+          font-size: 25px;
+          padding: 0 5px;
+        }
+      }
       .search-input{
         width: 100%;
         background: #F4F4F4;
         outline: none;
+        padding: 0px 10px;
+        border: 1px solid #E7E7E7;
 
       }
     }

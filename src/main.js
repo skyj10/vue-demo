@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -9,11 +10,17 @@ import './assets/css/font.css'
 // import './assets/icons'
 import './icons'
 import axios from 'axios'
+import ToTop from './plugin/toTop' // 引入
+import './assets/js/common' // 引入
+import common from './assets/js/common' // 引入
+Vue.use(ToTop) // 添加
 
 Vue.prototype.$http = axios
-Vue.prototype.$aa = aa
+Vue.prototype.common = common
 Vue.config.productionTip = false
+Vue.prototype.getToken = () => {
 
+}
 // 注册一个全局自定义指令 `v-focus`
 Vue.directive('clickOutside', {
   // 当被绑定的元素插入到 DOM 中时……
@@ -35,46 +42,30 @@ Vue.directive('clickOutside', {
     document.addEventListener('click', clickHandler)
   }
 })
-// Vue.prototype.formatDate = function (dateTimeStamp) {
-//   var result;
-//   var minute = 1000 * 60;
-//   var hour = minute * 60;
-//   var day = hour * 24;
-//   var halfamonth = day * 15;
-//   var month = day * 30;
-//   var now = new Date().getTime();
-//   var diffValue = now - dateTimeStamp;
-//   if(diffValue < 0){
-//     return;
-//   }
-//   var monthC =diffValue/month;
-//   var weekC =diffValue/(7*day);
-//   var dayC =diffValue/day;
-//   var hourC =diffValue/hour;
-//   var minC =diffValue/minute;
-//   if(monthC>=1){
-//     if(monthC<=12)
-//       result="" + parseInt(monthC) + "月前";
-//     else{
-//       result="" + parseInt(monthC/12) + "年前";
-//     }
-//   }
-//   else if(weekC>=1){
-//     result="" + parseInt(weekC) + "周前";
-//   }
-//   else if(dayC>=1){
-//     result=""+ parseInt(dayC) +"天前";
-//   }
-//   else if(hourC>=1){
-//     result=""+ parseInt(hourC) +"小时前";
-//   }
-//   else if(minC>=1){
-//     result=""+ parseInt(minC) +"分钟前";
-//   }else{
-//     result="刚刚";
-//   }
-//   return result;
-// }
+
+
+// 注册一个全局自定义指令 `v-focus`
+Vue.directive('resize', { // 指令的名称
+  bind(el, binding) { // el为绑定的元素，binding为绑定给指令的对象
+    let width = '', height = '';
+    function isReize() {
+      const style = document.defaultView.getComputedStyle(el);
+      if (width !== style.width || height !== style.height) {
+        let size={
+          width:width,
+          height:height
+        }
+        binding.value(size);  // 关键
+      }
+      width = style.width;
+      height = style.height;
+    }
+    el.__vueSetInterval__ = setInterval(isReize, 100);
+  },
+  unbind(el) {
+    clearInterval(el.__vueSetInterval__);
+  }
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

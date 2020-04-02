@@ -9,7 +9,7 @@
           <video-info-bottom></video-info-bottom>
           <common-area></common-area>
         </div>
-        <div class="content-right-div">
+        <div @click="test" class="content-right-div">
 
         </div>
 
@@ -49,6 +49,9 @@ export default {
   },
   computed: {},
   methods: {
+    test(){
+      this.common.test();
+    }
 
   },
   created() {

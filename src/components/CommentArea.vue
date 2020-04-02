@@ -5,14 +5,14 @@
     <div class=" common-control-head">
       <ul>
         <li :class="{'common-active':isSortHot}" @click="clickSortHot"  class="point-effect ">按热度排序</li>
-        <li :class="{'common-active':!isSortHot}" @click="clickSortTime" class="point-effect">按时间排序</li>
+        <li :class="{'common-active':!isSortHot}" @click="clickSortTime" class="point-effect" >按时间排序</li>
       </ul>
       <pagination ref="pagination" :total="total" :currentPage='current' @pagechange="pagechange"></pagination>
 
     </div>
 
     <comment-send @sendCommentText="sendCommentText" class="comment-send"></comment-send>
-    <comment-list  :CommentShowList="ConcatCommentList"></comment-list>
+    <comment-list ref="commentList"  :CommentShowList="ConcatCommentList"></comment-list>
     <pagination-bottom ref="paginationBottom" :total="total" :currentPage='current' @pagechange="pagechange"></pagination-bottom>
     <comment-send  @sendCommentText="sendCommentText" class="comment-send"></comment-send>
 
@@ -55,18 +55,45 @@ export default {
   computed: {
     ConcatCommentList:function(){
       return this.sendCommentList.concat(this.commentShowList);
+    },
+    updateSort(){
+      let startIndex=(this.current-1)*this.display;
+      this.commentShowList=this.getCommonList.slice(startIndex,startIndex+this.display);
+      console.log(this.commentShowList)
     }
   },
   methods: {
+    getCommentListByTime(){
+      let _this=this;
+      this.$http.get('/api/commentList')
+        .then(function (response) {
+          console.log(response);
+          _this.getCommonList=response.data.data;
+          _this.getCommonList.sort(_this.compare("sendTime"));
+          _this.total=_this.getCommonList.length;
+          let startIndex=(_this.current-1)*_this.display;
+          _this.commentShowList=_this.getCommonList.slice(startIndex,startIndex+_this.display);
+          _this.current=1;
+          _this.$refs.pagination.setCurrent(_this.current);
+          _this.$refs.paginationBottom.setCurrent(_this.current);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     getCommentList(){
       let _this=this;
       this.$http.get('/api/commentList')
         .then(function (response) {
           console.log(response);
           _this.getCommonList=response.data.data;
+          _this.getCommonList.sort(_this.compare("like"));
           _this.total=_this.getCommonList.length;
           let startIndex=(_this.current-1)*_this.display;
           _this.commentShowList=_this.getCommonList.slice(startIndex,startIndex+_this.display);
+          _this.current=1;
+          _this.$refs.pagination.setCurrent(_this.current);
+          _this.$refs.paginationBottom.setCurrent(_this.current);
         })
         .catch(function (error) {
           console.log(error);
@@ -79,7 +106,7 @@ export default {
         like:0,
         commentText:text,
         fromDevice:0,
-        sendTime:1585631344,
+        sendTime:Date.parse(new Date())/1000,
         level:4
       }
       this.sendCommentList.unshift(comment);
@@ -92,18 +119,30 @@ export default {
       console.log(this.current);//该参数就是当前点击的页码数
       let startIndex=(currentPage-1)*this.display;
       this.commentShowList=this.getCommonList.slice(startIndex,startIndex+this.display);
-      console.log(this.commentShowList)
+
 
 
 
     },
     clickSortHot() {
-      this.isSortHot = true;
+      if(!this.isSortHot){
+        this.isSortHot = true;
+        this.getCommentList();
+      }
     },
     clickSortTime(){
-      this.isSortHot=false;
-    }
-
+      if ( this.isSortHot){
+        this.isSortHot=false;
+        this.getCommentListByTime();
+      }
+    },
+    compare (property) {
+      return function (a, b) {
+        var value1 = a[property]
+        var value2 = b[property]
+        return value2 - value1
+      }
+    },
 
   },
   created () {

@@ -20,46 +20,57 @@
         <div class="comment-bottom">
           <span v-if="commentData.fromDevice!=0" >{{commentData.fromDevice|formatDevice}}</span>
           <span>{{commentData.sendTime|formatDate}}</span>
-          <span class="like"><i></i><span>31</span></span>
+          <span class="like"><i></i><span>{{commentData.like}}</span></span>
           <span class="hate"><i></i></span>
-          <span class="comment-back">回复</span>
+          <span class="comment-back" @click="isShowSend=!isShowSend">回复</span>
           <div class="comment-menu" v-click-outside="clickoutside">
             <div class="spot" @click="isShowMenu=true" ></div>
             <div v-if="isShowMenu"  class="comment-menu-list-div"  @mouseleave="isShowMenu=true" >
-              <div class="menu-item">加入黑名单</div>
+              <div class="menu-item" >加入黑名单</div>
               <div class="menu-item">举报</div>
             </div>
           </div>
         </div>
+        <comment-send @sendCommentText="sendCommentText" v-if="isShowSend" class="item-comment-send"></comment-send>
       </div>
 
     </div>
   </div>
 </template>
 <script>
+import Common from '../components/Common.vue'
+import common from '../assets/js/common.js'
+import CommentSend from '../components/CommentSend.vue'
 export default {
-
-
   name:'comment-item',
-  components: {},
+  components: {
+    Common,
+    CommentSend
+
+  },
   data () {
     return{
       isShowMenu:false,
-      isMouseIn:false
+      isMouseIn:false,
+      isShowSend:false
 
     }
 
   },
   computed: {},
   methods: {
+    sendCommentText(text){
+      console.log(text);
+
+    },
     clickoutside(){
       this.isShowMenu=false;
-      return this.aa.bb(value)
     }
   },
   filters:{
     formatDate:function (value) {
-//      return this.aa.bb(value)
+//      this.Common.formatDateAgo(value);
+     return common.formatDateAgo(value);
     },
     formatDevice:function(value){
       switch(value){
@@ -80,7 +91,9 @@ export default {
 
 </script>
 <style type="text/scss" lang="scss" >
-
+  .item-comment-send{
+    margin-bottom: 30px;
+  }
 
   .comment-menu-list-div{
     visibility: visible;

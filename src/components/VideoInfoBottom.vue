@@ -342,8 +342,8 @@ export default {
     display: flex;
     align-items: center;
     >span{
-      font-size: 14px;
-      margin-right: 20px;
+      font-size: 12px;
+      margin-right: 16px;
       cursor: pointer;
     }
     .menu-icon{
@@ -369,14 +369,17 @@ export default {
     display: flex;
     flex-flow: row wrap;
     align-content: center;
-    width: 100px;
-    height: 120px;
+    width: 80px;
+    height: auto;
+    font-size: 14px;
+    padding: 10px 0;
     top: 30px;
     right: 0px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
     .menu-item{
+      color: #222;
       width: 100%;
-      height: 40%;
+      height: 34px;
       align-items: center;
       display: flex;
       justify-content: center;

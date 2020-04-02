@@ -4,47 +4,44 @@
   </div>
 
 
-
 </template>
 <script>
 import CommentItem from '../components/CommentItem.vue'
+
 export default {
-  name:'comment-list',
+  name: 'comment-list',
   components: {
     CommentItem
   },
   data () {
-    return{
-      commentList:[],
-      getCommonList:[],
-
+    return {
+      commentList: [],
+      getCommonList: [],
 
     }
 
   },
   computed: {
-    ConcatCommentList:function(){
-      this.commentList=this.getCommonList.concat(this.sendComment)
-      return this.sendComment.concat(this.getCommonList);
-    }
+
   },
   methods: {
+
 
   },
   created () {
   },
 
-  props: ['sendComment','CommentShowList']
+  props: ['sendComment', 'CommentShowList']
 
 }
 
 
 </script>
 <style type="text/scss" lang="scss">
-  .comment-list-content{
-    >div:last-child{
-      >div{
-        .comment-content{
+  .comment-list-content {
+    > div:last-child {
+      > div {
+        .comment-content {
           border-bottom: 1px solid #e5e9ef;
         }
       }
