@@ -10,10 +10,8 @@ import './assets/css/font.css'
 // import './assets/icons'
 import './icons'
 import axios from 'axios'
-import ToTop from './plugin/toTop' // 引入
 import './assets/js/common' // 引入
 import common from './assets/js/common' // 引入
-Vue.use(ToTop) // 添加
 
 Vue.prototype.$http = axios
 Vue.prototype.common = common

@@ -115,6 +115,6 @@ input, select, textarea, button {
   transition-delay: 0s;
 }
 .point-effect:hover{
-  color: #1890ff;
+  color: #1890ff !important;
 }
 

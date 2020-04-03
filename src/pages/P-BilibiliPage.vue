@@ -10,6 +10,9 @@
           <common-area></common-area>
         </div>
         <div @click="test" class="content-right-div">
+         <uper-info></uper-info>
+          <video-card-list></video-card-list>
+
 
         </div>
 
@@ -31,6 +34,8 @@ import VideoPlayer from "../components/VideoPlayer.vue";
 import VideoInfoBottom from "../components/VideoInfoBottom.vue";
 import Pagination from '../components/Pagination.vue'
 import CommonArea from '../components/CommentArea.vue'
+import UperInfo from '../components/UperInfo.vue'
+import VideoCardList from '../components/VideoCardList.vue'
 export default {
   name: 'HelloWorld',
   components: {
@@ -39,7 +44,9 @@ export default {
     VideoPlayer,
     VideoInfoBottom,
     Pagination,
-    CommonArea
+    CommonArea,
+    UperInfo,
+    VideoCardList
   },
   data () {
     return {
@@ -63,6 +70,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style type="text/scss" lang="scss">
+
+
+
+
+
+
+
+
+
   #body{
     background: #ffffff;
   }
@@ -86,9 +102,9 @@ export default {
        min-width: 0;
      }
      .content-right-div{
+       margin-left: 30px;
        width: 320px;
        height: 2000px;
-       background-color: #42b983;
      }
    }
   }

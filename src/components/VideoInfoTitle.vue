@@ -66,7 +66,8 @@ export default {
   .video-info {
     color: #999;
     display: flex;
-    margin-top: 12px;
+    align-items: center;
+    margin-top: 15px;
   }
   .arrow-icon {
     font-size: 10px;
@@ -74,6 +75,7 @@ export default {
   }
   .stop-icon {
     fill: #fd676f;
+    font-size: 15px;
     margin-left: 15px;
     margin-right: 10px;
   }
