@@ -2,7 +2,7 @@
   <div class="advice-card-box" @mouseenter="showDanmu" @mouseleave="hideDanmu">
     <div class="card-pic-div" >
       <img src="../assets/img/videoPic.png">
-      <div  class="danmu-view" v-show="isShowDanmu">
+      <div ref="danmuView" class="danmu-view" v-show="isShowDanmu">
         <!--<video-card-danmu ref="danmu" v-for="item in videoCard.danmu" :left="item.left" :time="item.time" :text="item.text"></video-card-danmu>-->
         <div ref="danmu"  v-for="item in videoCard.danmu"   class="danmu-item">
           <span>{{item.text}}</span>
@@ -28,23 +28,100 @@ export default {
   },
   data () {
     return {
-      isShowDanmu:false
+      isShowDanmu:false,
+      danmuTime:1000,
+      lineCount:3,
+
     }
 
   },
   computed: {},
   methods: {
+    sortNumber(a,b){
+        return parseInt(a) - parseInt(b)
+    },
     showDanmu(){
       this.isShowDanmu=true;
       let _this=this;
-      console.log(this.$refs.danmu[0]);
-      this.$refs.danmu[0].style.left='-10px';
+      let i=0
+      let lineSet=new Set();
+      lineSet.add("8px");
+      lineSet.add("24px");
+      lineSet.add("40px");
+      let top=8;
+      var sendThread=setInterval(function () {
+
+        top=8;
+        if (_this.isShowDanmu) {
+          console.log( _this.$refs.danmu);
+
+          _this.$refs.danmu.forEach(item=>{
+            console.log("1");
+            //重置终点处的弹幕
+            if(-parseInt(item.offsetLeft)==item.textContent.length*14){
+//              item.style.left="100%";
+              item.style.transition="left 0s";
+              item.style.left="100%";
+              console.log("item.style.left"+item.style.left);
+
+            }
+
+            console.log("reset"+(parseInt(item.offsetLeft)+":"+parseInt(_this.$refs.danmuView.offsetWidth)));
+            if (parseInt(item.offsetLeft)!=parseInt(_this.$refs.danmuView.offsetWidth)){
+
+              if ((parseInt(item.offsetLeft)+parseInt(item.offsetWidth))>5){
+
+                if((parseInt(item.offsetLeft)+parseInt(item.offsetWidth))<(parseInt(_this.$refs.danmuView.offsetWidth)*0.8)){
+//                  lineSet.add(item.style.top);
+
+                }
+                else {
+                  lineSet.delete(item.style.top);
+                }
+              }
+
+            }
+          });
+          if(lineSet.size!=0){
+            let rows=Array.from(lineSet).sort(_this.sortNumber);
+            top=parseInt(rows[0]);
+            console.log(rows);
+          }
+          else {
+            let rows=Array.from(lineSet).sort(_this.sortNumber);
+            top=parseInt(rows[rows.length-1]);
+            console.log(rows);
+          }
+          if ( parseInt( _this.$refs.danmu[i].offsetLeft)==parseInt(_this.$refs.danmuView.offsetWidth)){
+            _this.$refs.danmu[i].style.top=top+"px";
+            console.log("offet"+top);
+            _this.$refs.danmu[i].style.transition="left 4s linear";
+            _this.$refs.danmu[i].style.left = '-'+_this.$refs.danmu[i].textContent.length*14+"px";//根据弹幕字数计算终点坐标
+            console.log(_this.$refs.danmu[i].offsetLeft+"width"+_this.$refs.danmu[i].offsetWidth);
+          }
+
+
+          if (i < _this.$refs.danmu.length - 1) {
+            i++;
+          }
+          else {
+            i = 0
+          }
+        }
+        else {
+          clearInterval(sendThread);
+        }
+
+
+      },this.danmuTime)
+
 
 
 
     },
     hideDanmu(){
-//      this.isShowDanmu=false;
+      this.isShowDanmu=false;
+      clearInterval();
     }
 
   },
@@ -83,9 +160,9 @@ export default {
       font-size: 14px;
       text-shadow: 1px 2px 2px  #001;
       position: absolute;
-      top: 8px;
+      top: 0px;
       left: 100%;
-      transition: left 4s linear;
+      /*transition: left 4s linear;*/
       white-space: nowrap;
     }
 
