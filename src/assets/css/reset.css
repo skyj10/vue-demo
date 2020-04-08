@@ -117,4 +117,14 @@ input, select, textarea, button {
 .point-effect:hover{
   color: #1890ff !important;
 }
+.select{
 
+  -webkit-user-select:none;
+
+  -moz-user-select:none;
+
+  -ms-user-select:none;
+
+  user-select:none;
+
+}

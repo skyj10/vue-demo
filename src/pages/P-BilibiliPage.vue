@@ -1,6 +1,7 @@
 <template>
   <div id="body">
     <title-bar></title-bar>
+    <float-nav v-show="isShowFloatNav" ref="floatNav"></float-nav>
     <div class="content-box-div">
       <div class="content-div">
         <div class="content-left-div">
@@ -9,18 +10,14 @@
           <video-info-bottom></video-info-bottom>
           <common-area></common-area>
         </div>
-        <div @click="test" class="content-right-div">
+        <div  class="content-right-div">
          <uper-info></uper-info>
           <video-card-list></video-card-list>
-
-
         </div>
-
       </div>
-
-
-
     </div>
+
+
 
 
   </div>
@@ -36,8 +33,9 @@ import Pagination from '../components/Pagination.vue'
 import CommonArea from '../components/CommentArea.vue'
 import UperInfo from '../components/UperInfo.vue'
 import VideoCardList from '../components/VideoCardList.vue'
+import FloatNav from '../components/FloatNav.vue'
 export default {
-  name: 'HelloWorld',
+  name: 'bilibili',
   components: {
     TitleBar,
     VideoInfoTitle,
@@ -46,18 +44,32 @@ export default {
     Pagination,
     CommonArea,
     UperInfo,
-    VideoCardList
+    VideoCardList,
+    FloatNav
+
   },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      isShowFloatNav:false
 
     }
   },
   computed: {},
+  mounted() {
+    //监听页面滚动事件
+    window.addEventListener("scroll", this.handleScroll);
+
+  },
   methods: {
-    test(){
-      this.common.test();
+    handleScroll(){
+      console.log(this.$refs.floatNav);
+      if (document.documentElement.scrollTop>800){
+        this.isShowFloatNav=true;
+      }
+      else {
+        this.isShowFloatNav=false;
+      }
     }
 
   },
