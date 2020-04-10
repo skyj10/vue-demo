@@ -1,6 +1,6 @@
 <template>
   <div class="advice-card-box">
-    <div class="card-pic-div"  @mouseenter="showDanmu" @mouseleave="hideDanmu" >
+    <div class="card-pic-div"  @mouseenter="showDanmu" @mouseleave="hideDanmu" @click="testdanmu">
       <img src="../assets/img/videoPic.png">
       <div ref="danmuView" class="danmu-view" v-show="isShowDanmu">
         <!--<video-card-danmu ref="danmu" v-for="item in videoCard.danmu" :left="item.left" :time="item.time" :text="item.text"></video-card-danmu>-->
@@ -12,7 +12,7 @@
     <div class="card-info-div">
       <div class="card-title " ><a class="point-effect"  :href="videoCard.videoUrl">{{videoCard.title}}</a></div>
       <div class="card-uper"><a href="videoCard.uperUrl">{{videoCard.uperName}}</a></div>
-      <div class="card-count">
+      <div class="card-count" >
         {{videoCard.reviewCount|formatCount}}播放 · {{videoCard.danmuCount|formatCount}}弹幕
       </div>
     </div>
@@ -33,12 +33,18 @@ export default {
       lineCount:4,    //弹幕最大行数
       top:8,           //弹幕行起始坐标
       lineHeight:16,   //弹幕行高
-      flyTime:3
+      flyTime:3        //飞行时间
     }
 
   },
   computed: {},
   methods: {
+    testdanmu(){
+      console.log("testdanmu");
+      this.videoCard.danmu.push({
+        text:"wowowo"
+      });
+    },
     sortNumber(a,b){
         return parseInt(a) - parseInt(b)
     },
@@ -47,8 +53,6 @@ export default {
       let _this=this;
       let i=0
       let lineSet=new Set();
-
-
       var sendThread=setInterval(function () {
         for (let j=0;j<_this.lineCount;j++){
           lineSet.add((_this.top+j*_this.lineHeight)+"px");
@@ -80,14 +84,12 @@ export default {
                 let itemDismissTime=itemS/itemSpeed;
                 let danmuEndTime=danmuS/danmuSpeed;
 //                if (itemDismissTime<danmuEndTime){
-
-                if((parseInt(item.offsetLeft)+parseInt(item.offsetWidth))<(parseInt(_this.$refs.danmuView.offsetWidth)*1)&&itemDismissTime<danmuEndTime){
+                //判断飞行过程中是否会重叠
+                if((parseInt(item.offsetLeft)+parseInt(item.offsetWidth))>(parseInt(_this.$refs.danmuView.offsetWidth)*1)||itemDismissTime>danmuEndTime){
 //                  lineSet.add(item.style.top);
-
-                }
-                else {
                   lineSet.delete(item.style.top);
                 }
+
               }
 
             }
@@ -126,9 +128,6 @@ export default {
 
 
       },this.danmuTime)
-
-
-
 
     },
     hideDanmu(){

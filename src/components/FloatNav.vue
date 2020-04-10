@@ -3,7 +3,8 @@
     <div class="float-totop" @click="toTop">
       <svg-icon iconClass='totop' className='totop-icon ' ></svg-icon>
     </div>
-    <div  class="float-mini select" @click="miniON=!miniON">  //优化了文字被选中的bug
+    <div  class="float-mini select" @click="miniON=!miniON">
+      <!--优化了文字被选中的bug-->
       <div>mini</div>
       <div>{{miniON?"ON":"OFF"}}</div>
     </div>

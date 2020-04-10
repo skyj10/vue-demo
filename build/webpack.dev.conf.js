@@ -16,6 +16,8 @@ var commentData = require('../src/assets/json/comment.json')//加载本地数据
 var commentList = commentData.commentList//获取对应的本地数据
 var videoCardData = require('../src/assets/json/videoCard.json')//加载本地数据文件
 var videoCardList = videoCardData.videoCard//获取对应的本地数据
+var danmuData = require('../src/assets/json/danmu.json')//加载本地数据文件
+var danmuList = danmuData.danmuList//获取对应的本地数据
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -61,6 +63,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno: 0,
           data: videoCardList
+        })//接口返回json数据，上面配置的数据seller就赋值给data请求后调用
+      });
+      app.get('/api/videoDanmuList', (req, res) => {
+        res.json({
+          errno: 0,
+          data: danmuList
         })//接口返回json数据，上面配置的数据seller就赋值给data请求后调用
       });
     }
