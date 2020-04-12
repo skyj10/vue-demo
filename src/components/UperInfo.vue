@@ -4,7 +4,8 @@
     <div class="uper-name-div">
       <div>
         <span class="uper-name-span">中国日报</span>
-        <a>发消息</a>
+
+        <a class="point-effect"> <svg-icon iconClass='message' className='message-icon' ></svg-icon> <span>发消息</span></a>
       </div>
       <div class="uper-desc-div">广受年轻人心疼的dddddddddddddddddddd时政网站</div>
       <div class="uper-button-div">
@@ -63,6 +64,20 @@ export default {
       right: 0px;
       >div{
         margin-top: 7px;
+        >a{
+
+          .message-icon{
+            fill:#999;
+            font-size: 16px;
+            margin-left: 5px;
+          }
+        }
+        >a:hover{
+          .message-icon{
+            fill:#1890ff;
+
+          }
+        }
       }
       .uper-name-span{
         font-size: 14px;
@@ -70,6 +85,7 @@ export default {
       }
       >a{
         color: #505050;
+
       }
       .uper-desc-div{
         color: #999;

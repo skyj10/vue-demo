@@ -32,14 +32,17 @@ export default {
     sendComment(e){
 
       if (this.$refs.textarea.value.length<=0){
-        let _this=this
-        this.toastNoText=true;
-        this.textAreaRed=true;
-        setTimeout(function () {
-          _this.toastNoText=false;
-        },3000)
-        console.log( this.toastNoText);
-        return
+        if (!this.toastNoText){
+          let _this=this
+          this.toastNoText=true;
+          this.textAreaRed=true;
+          setTimeout(function () {
+            _this.toastNoText=false;
+          },3000)
+          console.log( this.toastNoText);
+          return
+        }
+
 
       }
       else {

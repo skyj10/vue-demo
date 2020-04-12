@@ -12,7 +12,7 @@
             <i class="level " :class="{'lv1':commentData.level==1,'lv2':commentData.level==2,'lv3':commentData.level==3,'lv4':commentData.level==4,'lv5':commentData.level==5,'lv6':commentData.level==6}"></i>
           </a>
         </div>
-        <div class="comment-text" v-html="commentData.commentText">
+        <div class="comment-text"  v-html="commentData.commentText">
           lihail5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
           <br>
           sdfsdf
@@ -226,6 +226,7 @@ export default {
     word-break: break-all;
     line-height: 20px;
     margin: 2px 0;
+    white-space: pre-wrap;
   }
 
   .comment-bottom{
