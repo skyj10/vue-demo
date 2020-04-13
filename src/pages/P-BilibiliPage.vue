@@ -84,13 +84,6 @@ export default {
 <style type="text/scss" lang="scss">
 
 
-
-
-
-
-
-
-
   #body{
     background: #ffffff;
   }

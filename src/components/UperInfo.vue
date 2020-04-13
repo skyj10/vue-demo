@@ -7,7 +7,10 @@
 
         <a class="point-effect"> <svg-icon iconClass='message' className='message-icon' ></svg-icon> <span>发消息</span></a>
       </div>
-      <div class="uper-desc-div">广受年轻人心疼的dddddddddddddddddddd时政网站</div>
+      <div class="uper-desc-div">
+        用音乐  感动自己  感动世界
+        一只业余钢琴爱好者(๑• . •๑)
+      </div>
       <div class="uper-button-div">
         <div class="charge-button"><span>为TA充电</span></div>
         <div class="follow-button"><span>已关注</span><span>337.6万</span></div>

@@ -1,6 +1,6 @@
 <template>
   <div class="comment-list-content">
-    <comment-item v-for="item in CommentShowList" :commentData="item"></comment-item>
+    <comment-item v-for="item,idx in CommentShowList" :key="idx" :commentData="item"></comment-item>
   </div>
 
 

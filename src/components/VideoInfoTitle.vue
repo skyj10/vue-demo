@@ -1,10 +1,10 @@
 <template>
   <div class="video-title-info">
-    <h1 class="video-title"><span>咦～误入歧途的罗</span></h1>
+    <h1 class="video-title"><span>【钢琴】戴上耳机！超震撼演奏《黑暗森林》-《我的三体罗辑传》ED</span></h1>
     <div class="video-info">
-      <span class="area-span">国创</span>
+      <span class="area-span">音乐</span>
       <svg-icon iconClass='arrow' className='arrow-icon '></svg-icon>
-      <span>国产原创相关</span>
+      <span>演奏</span>
       <span class="up-date-span">2019-10-03 12:13:11</span>
 
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video-card-item v-for="item in getVideoCardList" :videoCard="item"></video-card-item>
+    <video-card-item v-for="item,idx in getVideoCardList" :key="idx" :videoCard="item"></video-card-item>
 
 
   </div>

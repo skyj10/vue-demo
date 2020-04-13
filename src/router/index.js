@@ -8,8 +8,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'BilibiliPage',
+      component: resolve => require(['../pages/P-BilibiliPage.vue'], resolve),
+      meta: {
+        title: 'bilibili'
+      }
     },
     {
       path: '/BilibiliPage',

@@ -4,19 +4,19 @@
       <div class="video-sanlian-button-content">
         <div class="sanlian-button">
           <svg-icon iconClass='like' className='sanlian-icon '></svg-icon>
-          <span>1962</span>
+          <span>15</span>
         </div>
         <div class="sanlian-button">
           <svg-icon iconClass='coin' className='sanlian-icon '></svg-icon>
-          <span>1962</span>
+          <span>23</span>
         </div>
         <div class="sanlian-button">
           <svg-icon iconClass='collect' className='sanlian-icon '></svg-icon>
-          <span>1962</span>
+          <span>12</span>
         </div>
         <div class="sanlian-button">
           <svg-icon iconClass='share' className='sanlian-icon '></svg-icon>
-          <span>1962</span>
+          <span>32</span>
         </div>
         <div class="video-sanlian-right">
           <span class="point-effect">
@@ -33,24 +33,28 @@
     </div>
     <div class="video-describe-box">
       <div class="video-describe-content">
-        <div ref="describe" :class="{'describe-show':isHideDes}" class="describe-content">教程出自黑马程序员http://yun.itheima.com/course/609.html?bili
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
-          教程出自黑马程序员
+        <div ref="describe" :class="{'describe-show':isHideDes}" class="describe-content">
+          Hello,大家好吖~
+          这次给大家带来的是《我的三体罗辑传》的ED《黑暗森林》
+          1. 这首作品是送给所有支持我的观众姥爷们的！《夜航星》 av96387480 能够达到两万多的播放量，荣登我的三体话题榜的热门作品，离不开各位的三连与支持！为感谢大家，特意再翻弹一曲《我的三体罗辑传》中的ED《黑暗森林》！
+          2. 还能会想起曾经还是乱纪元时追《我的三体罗辑传》的体验。每次片尾曲《黑暗森林》想起时，都会被深深地震撼到。
+          3. 这次翻弹的曲目难度非常大，高过之前所有作品的难度。截止发稿时，中间有一段仍然不够完美，up主已经尽力了，在这里给大家谢罪了。
+          4. up到现在还清晰地记着《三体》小说中对黑暗森林的精彩生动的描写：宇宙就是一座黑暗森林，每个文明都是带枪的猎人，像幽灵般潜行于林间，轻轻拨开挡路的树枝，竭力不让脚步发出一点儿声音，连呼吸都必须小心翼翼：他必须小心，因为林中到处都有与他一样潜行的猎人，如果他发现了别的生命，能做的只有一件事：开枪消灭之。在这片森林中，他人就是地狱，就是永恒的威胁，任何暴露自己存在的生命都将很快被消灭，这就是宇宙文明的图景，这就是对费米悖论的解释。
+          5. 谨以此曲献给《三体》、《我的三体》和黑暗森林
+          6. up之后还会继续更新更多的钢琴翻弹作品，喜欢的朋友们可以一键三连或关注来支持up哦~~~一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连一键三连
+
+          黑暗森林（《我的三体罗辑传》ED SIZE）
+
+          钢琴：童嘎
+          剪辑：童嘎
+          原唱：雲翼星辰
+          原曲：《Schwarzer Regen》
+          作曲 : regulus
+          作词 : lnine=小九
+          演奏乐器：Yamaha cp88
+          钢琴音源：Yamaha Studio Grand C7
+          曲谱：耀雪_DraXon av96212986
+          剪辑素材：黑暗森林MV av6585316
         </div>
         <div v-if="isHideDescribe"   class="describe-hidden-button">
           <span class="point-effect" @click="isHideDes=!isHideDes">{{isHideDes?"收起":"展开更多"}}</span>
@@ -60,7 +64,7 @@
       <div class="video-tag-box">
         <ul>
 
-          <li v-for="item of tagList" class="point-effect"><span>{{item.tagText}}</span></li>
+          <li v-for="item of tagList" class="point-effect tag-div"><span>{{item.tagText}}</span></li>
 
           <!--<li class="point-effect add-tag"><svg-icon iconClass='add' className='add-icon '></svg-icon></li>-->
           <li class="input-tag">
@@ -90,13 +94,13 @@ export default {
       isTagInputFocus:false,
       tagList:[
         {
-          tagText:"黑马程序员"
+          tagText:"演奏"
         }, {
-          tagText:"黑马程序员"
+          tagText:"三体"
         }, {
-          tagText:"黑马程序员"
+          tagText:"我的三体"
         },{
-          tagText:"黑马程序员"
+          tagText:"罗辑"
         },
 
       ]
@@ -165,9 +169,11 @@ export default {
       flex-wrap: wrap;
 
       >li{
-        padding: 8px;
+        line-height: 25px;
+        padding-right: 8px;
+        padding-left: 8px;
         background-color: #F4F4F4;
-        border-radius: 12px;
+        border-radius: 14px;
         margin-right: 10px;
         margin-top: 5px;
       }
@@ -184,7 +190,7 @@ export default {
       .input-tag{
         padding: 4px 10px;
         background-color: #F4F4F4;
-        border-radius: 12px;
+        border-radius: 14px;
         margin-right: 10px;
         display: flex;
         align-items: center;
@@ -212,6 +218,13 @@ export default {
             transform: rotate(90deg);
           }
         }
+      }
+      .tag-div{
+        border: 1px solid #F4F4F4;
+        transition: all .3s;
+      }
+      .tag-div:hover{
+        border: 1px solid #45A0D7;
       }
       .input-tag:hover{
         >input{
