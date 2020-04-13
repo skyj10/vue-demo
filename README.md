@@ -10,7 +10,7 @@
   ![](https://github.com/skyj10/vue-demo/blob/master/readme/main1.png)
   ![](https://github.com/skyj10/vue-demo/blob/master/readme/main2.png)
 
-  <p>目前初步完成弹幕引擎的基础核心逻辑模块,包括缩略图悬浮弹幕，下面是主弹幕引擎的使用指南，大部分其他功能同样仍未完善，可自己玩一玩</br>
+  <p>目前初步完成弹幕引擎的基础核心逻辑模块,包括缩略图悬浮弹幕，弹幕回收等，下面是主弹幕引擎的使用指南，大部分其他功能同样仍未完善，可自己玩一玩</br>
  
   ![](https://github.com/skyj10/vue-demo/blob/master/readme/danmu.png)
   ![](https://github.com/skyj10/vue-demo/blob/master/readme/danmCode.png)
