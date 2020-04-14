@@ -50,9 +50,11 @@ export default {
       lineCount: 10,    //弹幕最大行数
       top: 8,           //弹幕行起始坐标
       lineHeight: 24,   //弹幕行高
-      flyTime: 10,       //飞行时间
+      flyTimeBase: 8,       //基础飞行时间
+      flyTimeFloat:3 ,   //飞行时间浮动（字数与飞行时间成反比）
       textSize: 22,      //弹幕大小（px）
       danmuMaxCount: 100 //最大同屏弹幕数
+
 
     }
   },
@@ -60,7 +62,7 @@ export default {
 
   methods: {
     getFlyTime(text){
-      return this.flyTime+(1/text.length)
+      return this.flyTimeBase+(this.flyTimeFloat/text.length)
     },
     getRamdonStr (m,n,char){
       var num = Math.floor(Math.random()*(m - n) + n);

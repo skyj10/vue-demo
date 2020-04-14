@@ -33,7 +33,7 @@ export default {
       lineCount:4,    //弹幕最大行数
       top:8,           //弹幕行起始坐标
       lineHeight:16,   //弹幕行高
-      flyTime:3        //飞行时间
+      flyTimeBase:3        //飞行时间
     }
 
   },
@@ -77,8 +77,8 @@ export default {
 
               if ((parseInt(item.offsetLeft)+parseInt(item.offsetWidth))>5){
                 //算法处理防止弹幕重叠
-                let itemSpeed=(parseInt(_this.$refs.danmuView.offsetWidth)+parseInt(item.offsetWidth))/_this.flyTime;
-                let danmuSpeed=(_this.$refs.danmu[i].textContent.length*14+parseInt(_this.$refs.danmuView.offsetWidth))/_this.flyTime;
+                let itemSpeed=(parseInt(_this.$refs.danmuView.offsetWidth)+parseInt(item.offsetWidth))/_this.flyTimeBase;
+                let danmuSpeed=(_this.$refs.danmu[i].textContent.length*14+parseInt(_this.$refs.danmuView.offsetWidth))/_this.flyTimeBase;
                 let itemS=parseInt(item.offsetWidth)+parseInt(item.offsetLeft);
                 let danmuS=parseInt(_this.$refs.danmuView.offsetWidth);
                 let itemDismissTime=itemS/itemSpeed;
@@ -102,7 +102,7 @@ export default {
             if ( parseInt( _this.$refs.danmu[i].offsetLeft)==parseInt(_this.$refs.danmuView.offsetWidth)){
               _this.$refs.danmu[i].style.top=top+"px";
               console.log("offet"+top);
-              _this.$refs.danmu[i].style.transition="left "+_this.flyTime+"s linear";
+              _this.$refs.danmu[i].style.transition="left "+_this.flyTimeBase+"s linear";
               _this.$refs.danmu[i].style.left = '-'+_this.$refs.danmu[i].textContent.length*14+"px";//根据弹幕字数计算终点坐标
               console.log(_this.$refs.danmu[i].offsetLeft+"width"+_this.$refs.danmu[i].offsetWidth);
             }
