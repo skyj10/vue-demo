@@ -29,13 +29,11 @@
 
     </div>
 
-
   </div>
 
   </div>
 </template>
 <script>
-import index from '../router/index'
 
 export default {
   name: 'video-player',
@@ -47,13 +45,15 @@ export default {
       showDanmuList: [],
       getDanmuList: [],
       danmuTime: 100, //弹幕间隔
-      lineCount: 10,    //弹幕最大行数
+      lineCount: 20,    //弹幕最大行数
       top: 8,           //弹幕行起始坐标
       lineHeight: 24,   //弹幕行高
-      flyTimeBase: 8,       //基础飞行时间
+      flyTimeBase: 10,       //基础飞行时间
       flyTimeFloat:3 ,   //飞行时间浮动（字数与飞行时间成反比）
       textSize: 22,      //弹幕大小（px）
-      danmuMaxCount: 100 //最大同屏弹幕数
+      danmuMaxCount: 100, //最大同屏弹幕数
+
+      testDanmuTime:100//测试弹幕间隔ms
 
 
     }
@@ -77,8 +77,9 @@ export default {
 //        event.currentTarget.style.left="100%";
 //        event.currentTarget.style.top="1px";
 //        event.currentTarget.style.transition="left 0s";
-        item.sendStatus = 3
-        this.refreshList()
+        item.sendStatus = 3;
+        this.$set(this.showDanmuList,index,item);
+//        this.refreshList()
       }
     },
     //模拟数据
@@ -108,7 +109,9 @@ export default {
           this.$refs.danmu[emptyShotIndex].style.transition = 'left 0s'
           this.$refs.danmu[emptyShotIndex].style.left = '100%'
           this.$refs.danmu[emptyShotIndex].style.top = '0'
-          this.refreshList()
+//          this.refreshList()
+          this.$set(this.showDanmuList,emptyShotIndex,this.showDanmuList[emptyShotIndex]);
+
         }
         else {
           if (this.showDanmuList.length <= this.danmuMaxCount) {
@@ -126,10 +129,19 @@ export default {
       this.$refs.inputArea.focus()
 
     },
+    testDanmu(){
+      let _this=this;
+      var testThread = setInterval(function () {
+        if (_this.danmuSwitch){
+          _this.addDanmu();
+        }
+      },this.testDanmuTime);
+    },
     addDanmu () {
       if (!this.danmuSwitch) {
         return
       }
+      console.log(this.$refs.danmuView.offsetHeight);
       let emptyShotIndex = this.findEmptyShot()
       if (emptyShotIndex >= 0) {
         this.showDanmuList[emptyShotIndex] = {
@@ -142,7 +154,8 @@ export default {
         this.$refs.danmu[emptyShotIndex].style.transition = 'left 0s'
         this.$refs.danmu[emptyShotIndex].style.left = '100%'
         this.$refs.danmu[emptyShotIndex].style.top = '0'
-        this.refreshList()
+//        this.refreshList()
+        this.$set(this.showDanmuList,emptyShotIndex,this.showDanmuList[emptyShotIndex])
       }
       else {
         if (this.showDanmuList.length <= this.danmuMaxCount) {
@@ -173,13 +186,16 @@ export default {
     },
     showDanmu () {
       let _this = this
-      let i = 0
-      let lineSet = new Set()
-      let time = 0
+      let lineSet = new Set();
+      let lineCount=this.lineCount;
       var sendThread = setInterval(function () {
         if (_this.danmuSwitch) {
-          time = time + _this.danmuTime
-          for (let j = 0; j < _this.lineCount; j++) {
+          lineCount=_this.lineCount;
+          if(_this.$refs.danmuView.offsetHeight<((_this.lineHeight*_this.lineCount)+_this.top)){
+            lineCount=Math.floor((_this.$refs.danmuView.offsetHeight-_this.top)/_this.lineHeight);
+          }
+          lineSet.clear();
+          for (let j = 0; j < lineCount; j++) {
             lineSet.add((_this.top + j * _this.lineHeight) + 'px')
           }
           let top = _this.top
@@ -188,10 +204,9 @@ export default {
 //              if (_this.$refs.danmu) {
               let index = 0
               _this.$refs.danmu.forEach(item => {
-
-                if (parseInt(item.offsetLeft) != parseInt(_this.$refs.danmuView.offsetWidth)) {
-
-                  if ((parseInt(item.offsetLeft) + parseInt(item.offsetWidth)) > 5) {
+                if(lineSet.has(item.style.top)){
+                  if (parseInt(item.offsetLeft) != parseInt(_this.$refs.danmuView.offsetWidth)) {
+//                  if ((parseInt(item.offsetLeft) + parseInt(item.offsetWidth)) > 5) {
                     //算法处理防止弹幕重叠
                     let itemSpeed = (parseInt(_this.$refs.danmuView.offsetWidth) + parseInt(item.offsetWidth)) /_this.getFlyTime(_this.showDanmuList[index].text)
                     let danmuSpeed = (_this.$refs.danmu[i].textContent.length * _this.textSize + parseInt(_this.$refs.danmuView.offsetWidth)) / _this.getFlyTime(_this.showDanmuList[i].text)
@@ -203,14 +218,16 @@ export default {
                     if ((parseInt(item.offsetLeft) + parseInt(item.offsetWidth)) > (parseInt(_this.$refs.danmuView.offsetWidth) * 1) || itemDismissTime > danmuEndTime) {
                       lineSet.delete(item.style.top)
                     }
+//                  }
+                  }
+                  else {
+                    //如果弹幕处于正在飞行状态，该行不可用
+                    if (_this.showDanmuList[index].sendStatus == 2) {
+                      lineSet.delete(item.style.top)
+                    }
                   }
                 }
-                else {
-                  //如果弹幕处于正在飞行状态，该行不可用
-                  if (_this.showDanmuList[index].sendStatus == 2) {
-                    lineSet.delete(item.style.top)
-                  }
-                }
+
                 index++
               })
               if (lineSet.size != 0) {
@@ -220,8 +237,9 @@ export default {
                 if (i <= _this.$refs.danmu.length - 1) {
                   //判断弹幕初始位置是否在起点,是否处于待发状态
                   if (parseInt(_this.$refs.danmu[i].offsetLeft) == parseInt(_this.$refs.danmuView.offsetWidth) && _this.showDanmuList[i].sendStatus == 1) {
-                    _this.showDanmuList[i].sendStatus = 2
-                    _this.refreshList()
+                    _this.showDanmuList[i].sendStatus = 2;
+//                    _this.refreshList()
+                    _this.$set(_this.showDanmuList,i,_this.showDanmuList[i])
                     _this.$refs.danmu[i].style.top = top + 'px'
                     _this.$refs.danmu[i].style.transition = 'left ' + _this.getFlyTime(_this.showDanmuList[i].text) + 's linear'
                     _this.$refs.danmu[i].style.fontSize = _this.textSize + 'px'
@@ -232,6 +250,7 @@ export default {
               }
               else {
                 console.log('没有空间')
+                //放弃该弹幕,并回收子弹
                 _this.showDanmuList[i].sendStatus = 3
                 return;
               }
@@ -249,7 +268,8 @@ export default {
     this.getDanmuData()
   },
   mounted () {
-    this.showDanmu()
+    this.showDanmu();
+    this.testDanmu();
   },
   pops: {}
 

@@ -1,6 +1,6 @@
 <template>
   <div class="advice-card-box">
-    <div class="card-pic-div"  @mouseenter="showDanmu" @mouseleave="hideDanmu" @click="testdanmu">
+    <div class="card-pic-div"  @mouseenter="showDanmu" @mouseleave="hideDanmu" >
       <img src="../assets/img/videoPic.png">
       <div ref="danmuView" class="danmu-view" v-show="isShowDanmu">
         <!--<video-card-danmu ref="danmu" v-for="item in videoCard.danmu" :left="item.left" :time="item.time" :text="item.text"></video-card-danmu>-->
@@ -39,12 +39,6 @@ export default {
   },
   computed: {},
   methods: {
-    testdanmu(){
-      console.log("testdanmu");
-      this.videoCard.danmu.push({
-        text:"wowowo"
-      });
-    },
     sortNumber(a,b){
         return parseInt(a) - parseInt(b)
     },
@@ -59,17 +53,12 @@ export default {
         }
         let top=_this.top;
         if (_this.isShowDanmu) {
-          console.log( _this.$refs.danmu);
-
           _this.$refs.danmu.forEach(item=>{
             console.log("1");
             //重置终点处的弹幕
             if(-parseInt(item.offsetLeft)==item.textContent.length*14){
-//              item.style.left="100%";
               item.style.transition="left 0s";
               item.style.left="100%";
-              console.log("item.style.left"+item.style.left);
-
             }
 
             console.log("reset"+(parseInt(item.offsetLeft)+":"+parseInt(_this.$refs.danmuView.offsetWidth)));
@@ -83,10 +72,8 @@ export default {
                 let danmuS=parseInt(_this.$refs.danmuView.offsetWidth);
                 let itemDismissTime=itemS/itemSpeed;
                 let danmuEndTime=danmuS/danmuSpeed;
-//                if (itemDismissTime<danmuEndTime){
                 //判断飞行过程中是否会重叠
                 if((parseInt(item.offsetLeft)+parseInt(item.offsetWidth))>(parseInt(_this.$refs.danmuView.offsetWidth)*1)||itemDismissTime>danmuEndTime){
-//                  lineSet.add(item.style.top);
                   lineSet.delete(item.style.top);
                 }
 
@@ -97,24 +84,12 @@ export default {
           if(lineSet.size!=0){
             let rows=Array.from(lineSet).sort(_this.sortNumber);
             top=parseInt(rows[0]);
-            console.log(rows);
-
             if ( parseInt( _this.$refs.danmu[i].offsetLeft)==parseInt(_this.$refs.danmuView.offsetWidth)){
               _this.$refs.danmu[i].style.top=top+"px";
-              console.log("offet"+top);
               _this.$refs.danmu[i].style.transition="left "+_this.flyTimeBase+"s linear";
               _this.$refs.danmu[i].style.left = '-'+_this.$refs.danmu[i].textContent.length*14+"px";//根据弹幕字数计算终点坐标
-              console.log(_this.$refs.danmu[i].offsetLeft+"width"+_this.$refs.danmu[i].offsetWidth);
             }
           }
-//          else {
-//            let rows=Array.from(lineSet).sort(_this.sortNumber);
-//            top=parseInt(rows[rows.length-1]);
-//            console.log(rows);
-//          }
-
-
-
           if (i < _this.$refs.danmu.length - 1) {
             i++;
           }

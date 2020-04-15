@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     handleScroll(){
-      console.log(this.$refs.floatNav);
       if (document.documentElement.scrollTop>800){
         this.isShowFloatNav=true;
       }
