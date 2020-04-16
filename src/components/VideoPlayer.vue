@@ -44,11 +44,11 @@ export default {
       danmuSwitch: false,
       showDanmuList: [],
       getDanmuList: [],
-      danmuTime: 100, //弹幕间隔
+      danmuTime: 200, //弹幕间隔
       lineCount: 20,    //弹幕最大行数
       top: 8,           //弹幕行起始坐标
       lineHeight: 24,   //弹幕行高
-      flyTimeBase: 10,       //基础飞行时间
+      flyTimeBase: 8,       //基础飞行时间
       flyTimeFloat:3 ,   //飞行时间浮动（字数与飞行时间成反比）
       textSize: 22,      //弹幕大小（px）
       danmuMaxCount: 100, //最大同屏弹幕数
@@ -109,6 +109,7 @@ export default {
           this.$refs.danmu[emptyShotIndex].style.transition = 'left 0s'
           this.$refs.danmu[emptyShotIndex].style.left = '100%'
           this.$refs.danmu[emptyShotIndex].style.top = '0'
+          this.$refs.danmu[emptyShotIndex].style.border = '1px solid #00a1d6'
 //          this.refreshList()
           this.$set(this.showDanmuList,emptyShotIndex,this.showDanmuList[emptyShotIndex]);
 
@@ -141,7 +142,6 @@ export default {
       if (!this.danmuSwitch) {
         return
       }
-      console.log(this.$refs.danmuView.offsetHeight);
       let emptyShotIndex = this.findEmptyShot()
       if (emptyShotIndex >= 0) {
         this.showDanmuList[emptyShotIndex] = {
@@ -154,6 +154,7 @@ export default {
         this.$refs.danmu[emptyShotIndex].style.transition = 'left 0s'
         this.$refs.danmu[emptyShotIndex].style.left = '100%'
         this.$refs.danmu[emptyShotIndex].style.top = '0'
+        this.$refs.danmu[emptyShotIndex].style.border = 'none'
 //        this.refreshList()
         this.$set(this.showDanmuList,emptyShotIndex,this.showDanmuList[emptyShotIndex])
       }
@@ -241,16 +242,15 @@ export default {
 //                    _this.refreshList()
                     _this.$set(_this.showDanmuList,i,_this.showDanmuList[i])
                     _this.$refs.danmu[i].style.top = top + 'px'
+
                     _this.$refs.danmu[i].style.transition = 'left ' + _this.getFlyTime(_this.showDanmuList[i].text) + 's linear'
                     _this.$refs.danmu[i].style.fontSize = _this.textSize + 'px'
                     _this.$refs.danmu[i].style.left = '-' + _this.$refs.danmu[i].textContent.length * _this.textSize + 'px'//根据弹幕字数计算终点坐标
                   }
                 }
-
               }
               else {
-                console.log('没有空间')
-                //放弃该弹幕,并回收子弹
+                //无空间，放弃该弹幕,并回收子弹
                 _this.showDanmuList[i].sendStatus = 3
                 return;
               }
