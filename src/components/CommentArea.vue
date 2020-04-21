@@ -193,10 +193,12 @@ export default {
         position: absolute;
         left: 50%;
         bottom: 0px;
-        transform: translateX(-50%);
-        border-left: 3px solid transparent;
+/*        transform: translateX(-50%);*/
+        border-width: 50px;
+        border-color: #45A0D7 #45A0D7 #45A0D7 #45A0D7 ;
+/*        border-left: 3px solid transparent;
         border-right: 3px solid transparent;
-        border-bottom: 4px solid #45A0D7;
+        border-bottom: 4px solid #45A0D7;*/
       }
     }
   }

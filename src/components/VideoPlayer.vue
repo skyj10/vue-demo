@@ -44,6 +44,7 @@ export default {
       danmuSwitch: false,
       showDanmuList: [],
       getDanmuList: [],
+      emptySet:[],
       danmuTime: 200, //弹幕间隔
       lineCount: 20,    //弹幕最大行数
       top: 8,           //弹幕行起始坐标
@@ -78,6 +79,8 @@ export default {
 //        event.currentTarget.style.top="1px";
 //        event.currentTarget.style.transition="left 0s";
         item.sendStatus = 3;
+        this.emptySet.push(index);
+
         this.$set(this.showDanmuList,index,item);
 //        this.refreshList()
       }
@@ -175,10 +178,8 @@ export default {
     },
 
     findEmptyShot () {
-      for (let i = 0; i < this.showDanmuList.length; i++) {
-        if (this.showDanmuList[i].sendStatus == 3) {
-          return i
-        }
+      if(this.emptySet.length>0){
+        return this.emptySet.shift();
       }
       return -1
     },
