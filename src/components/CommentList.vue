@@ -1,6 +1,6 @@
 <template>
   <div class="comment-list-content">
-    <comment-item v-for="item,idx in CommentShowList" :key="idx" :commentData="item"></comment-item>
+    <comment-item @showItemCommentSend="showItemCommentSend" v-for="item,idx in CommentShowList" :key="idx" :commentData="item" :index="idx" ref="commentItem"></comment-item>
   </div>
 
 
@@ -25,6 +25,16 @@ export default {
 
   },
   methods: {
+    clearCommentSend(){
+      this.$refs.commentItem.forEach(item=>{
+        item.hideCommentSend();
+      })
+    },
+    showItemCommentSend(index){
+      this.clearCommentSend();
+      this.$refs.commentItem[index].showCommentSend();
+    }
+
 
 
   },

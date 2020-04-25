@@ -110,6 +110,7 @@ export default {
         level:4
       }
       this.sendCommentList.unshift(comment);
+      this.$refs.commentList.clearCommentSend();
     },
     pagechange:function(currentPage){
 

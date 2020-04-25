@@ -22,7 +22,7 @@
           <span>{{commentData.sendTime|formatDate}}</span>
           <span class="like"><i></i><span>{{commentData.like}}</span></span>
           <span class="hate"><i></i></span>
-          <span class="comment-back" @click="isShowSend=!isShowSend">回复</span>
+          <span class="comment-back" @click="clickCommentBack">回复</span>
           <div class="comment-menu" v-click-outside="clickoutside">
             <div class="spot" @click="isShowMenu=true" ></div>
             <div v-if="isShowMenu"  class="comment-menu-list-div"  @mouseleave="isShowMenu=true" >
@@ -59,6 +59,15 @@ export default {
   },
   computed: {},
   methods: {
+    showCommentSend(){
+      this.isShowSend=true;
+    },
+    clickCommentBack(){
+      this.$emit('showItemCommentSend', this.index);
+    },
+    hideCommentSend(){
+      this.isShowSend=false;
+    },
     sendCommentText(text){
       console.log(text);
 
@@ -69,7 +78,6 @@ export default {
   },
   filters:{
     formatDate:function (value) {
-//      this.Common.formatDateAgo(value);
      return common.formatDateAgo(value);
     },
     formatDevice:function(value){
@@ -84,7 +92,7 @@ export default {
   created () {
 
   },
-  props: ['commentData']
+  props: ['commentData','index']
 
 }
 

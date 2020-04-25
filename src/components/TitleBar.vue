@@ -5,30 +5,32 @@
         <div>
 
           <ul class="ul-title-bar-left">
-            <li><svg-icon iconClass='BILIBILI_LOGO' className='bilibili-icon ' ></svg-icon></li>
-            <li class="li-logo point-effect" >
+            <li>
+              <svg-icon iconClass='BILIBILI_LOGO' className='bilibili-icon '></svg-icon>
+            </li>
+            <li class="li-logo point-effect">
               <span>主站</span>
             </li>
-            <li class="point-effect" >
+            <li class="point-effect">
               <span>番剧</span>
             </li>
-            <li class="point-effect" >
+            <li class="point-effect">
               <span>游戏中心</span>
             </li>
-            <li class="point-effect" >
+            <li class="point-effect">
               <span>直播</span>
             </li>
-            <li class="point-effect" >
+            <li class="point-effect">
               <span>会员购</span>
             </li>
-            <li class="point-effect" >
+            <li class="point-effect">
               <span>漫画</span>
             </li>
-            <li class="point-effect" >
+            <li class="point-effect">
               <span>赛事</span>
             </li>
-            <li class="point-effect" >
-              <svg-icon iconClass='phone' className='phone-icon ' ></svg-icon>
+            <li class="point-effect">
+              <svg-icon iconClass='phone' className='phone-icon '></svg-icon>
               <span style="    margin-left: 20px;">下载APP</span>
             </li>
           </ul>
@@ -37,16 +39,16 @@
       </div>
       <div class="div-title-bar-middle" v-resize="resizeSearch">
         <div class="search-box">
-          <input type="text" class="search-input" v-if="isShowSearchInput">
-          <div class="search-button-div" :class="{'search-button-div-hide':!isShowSearchInput}">
+          <input type="text" class="search-input" >
+          <div class="search-button-div" >
             <svg-icon iconClass='search' className='search-icon '></svg-icon>
           </div>
         </div>
       </div>
       <div class="title-bar-right-div">
         <div>
-          <div class="header-div"><img class="header-img" src="../assets/img/header.png"/></div>
-          <div><span >大会员</span></div>
+          <div class="header-div"><img class="header-img" src="../assets/img/header.png" /></div>
+          <div><span>大会员</span></div>
           <div>
             <div class="num-div"><span>18</span></div>
             <span>消息</span>
@@ -66,7 +68,7 @@
 
 </template>
 <script>
-export default {
+  export default {
   name:'title-bar',
   components: {},
   data() {
@@ -102,7 +104,8 @@ export default {
 
 </script>
 
-<style  type="text/scss" lang="scss">
+<style type="text/scss" lang="scss">
+ 
   .div-title-bar{
     font-size: 14px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
@@ -286,6 +289,17 @@ export default {
 
 
   }
-
+ @media screen and (max-width: 1200px) {
+      .search-input {
+          display: none;
+      }
+      .search-button-div{
+        background: none !important;
+        .search-icon{
+          font-size: 25px !important;
+          padding: 0 5px !important;
+        }
+      }
+  }
 
 </style>
